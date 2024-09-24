@@ -1,3 +1,11 @@
+const CACHE_NAME = 'my-app-cache-v1';
+const urlsToCache = [
+    '/',
+    '/index.html',
+    '/offline.html',
+    '/favicon.ico',
+    // Add other assets you want to cache
+];
 self.addEventListener('push', event => {
     const data = event.data.json();
     const options = {
@@ -31,3 +39,6 @@ self.addEventListener('notificationclick', event => {
             })
     );
 });
+
+// Cài đặt service worker
+

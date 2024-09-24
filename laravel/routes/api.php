@@ -11,11 +11,12 @@ Route::group([
     'prefix' => 'auth'
 ], function ($router) {
 
-    Route::post('login', [AuthController::class,'login']);
-    Route::post('logout', [AuthController::class,'logout']);
-    Route::post('refresh', [AuthController::class,'refresh']);
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('tasks', [TaskController::class, 'store']);
-    Route::post('me', [AuthController::class,'me']);
+    Route::get('tasks', [TaskController::class, 'index']);
+    Route::post('me', [AuthController::class, 'me']);
 
 });
 

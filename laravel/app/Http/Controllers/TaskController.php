@@ -37,12 +37,14 @@ class TaskController extends Controller
             'assigned_to' => $validated['assigned_to'],
         ]);
 
-        $user = User::find($validated['assigned_to']);
-        $user->notify(new TaskAssignedNotification($task));
-        http::post('http://localhost:8080/send-notification', $validated['subscription']);
+        http::post('http://localhost:8080/send-notification', ['new_task' => $task,
+            'subscription' => $validated['subscription'],
+            'user_id' => auth()->id()
+        ]);
         return response()->json(['message' => 'Task assigned successfully!',
         ]);
     }
+
 
     public function index()
     {

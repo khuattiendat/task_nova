@@ -19,10 +19,11 @@ const LoginPage = () => {
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
             const response = await login(data);
-            console.log(response);
+
             if (response) {
-                const {access_token, users_list} = response;
+                const {access_token, users_list, user_id} = response;
                 CookieService.set('access_token', access_token, '/');
+                CookieService.set('user_id', user_id, '/');
                 toast.success("Đăng nhập thành công");
                 navigate('/user', {state: {users_list}});
             } else {

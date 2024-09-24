@@ -14,18 +14,19 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = request(['email', 'password']);
-       
-        if (! $token = auth()->attempt($credentials)) {
+
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        $users = User::all(['id', 'name']);
+        $users = User::where('id', '!=', auth()->id())->get(['id', 'name']);
         $accessTokenCookie = Cookie::make('access_token', $token, auth()->factory()->getTTL() * 60, '/', null, false, false, false, 'Lax');
 
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'users_list' => $users // Trả về danh sách tất cả người dùng
+            'users_list' => $users, // Trả về danh sách tất cả người dùng
+            'user_id' => auth()->id()
         ])->withCookie($accessTokenCookie);
     }
 
